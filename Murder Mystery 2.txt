@@ -1,41 +1,3 @@
---[[
->info of this Mm2 Script<
-So this script make for testing and example for some function of part for beginner or even advanced,
-This is Open source Script is free to modify or edit and you guys don't need to give me credit for this work too even if you steal it or you are skid so I will anyway don't care
-___________
-I only learn Lua for 2-3 years and have some other knowledge like Luau, LuaJit, Lua FiveM and some other,
-forgot to say that I'm only just 15 year old
-___________
-This Mm2 Script is just a simple code and function and I don't have some ideas too so I only make just a simple function and thank you for use this open source script, Thanks for support <3
--- https://github.com/Backlostunking/Open-Source/tree/main
---> free webhooks script: https://github.com/Backlostunking/Open-Source/blob/main/Webhooks
-Enjoy using this open source script and my discord username: scriptermrbacon
-]]
---[[
-ignore free Hidden properties
--- on everywhere (I think):
-RobloxLocked,
-FindFirstDescendant, FindFirstAncestor, FindFirstAncestorOfClass, FindFirstAncestorWhichIsA
--- on Player only (Not Service Players):
-SetAccountAge,
-GetNetworkPing,
-SetMembershipType,
-SimulationRadius,
-MaxSimulationRadius,
-MaximumSimulationRadius,
-SimulationRadiusChanged,
-AddReplicationFocus,
-AddReplicationFocusPosition,
-RemoveReplicationFocus,
-RemoveReplicationFocusPosition,
-ScriptSecurityError,
-Guest,
-IsFriendsWith, isFriendsWith, IsBestFriendsWith, GetFriendStatus, GetFriendsOnline, FriendStatusChanged, RemoteFriendRequestSignal, RequestFriendship, RevokeFriendship
---DM me on discord if you need more
-]]
---[[
-Free cloneref script project by ScripterMrbacon
-This for some advanced exploit who need this function for some executor that don't have function cloneref in environment (don't support cloneref function if say as understand)
 local cloneref = function(instance)
 	if typeof(instance) ~= "Instance" then return instance end
 	local proxy = newproxy(true)
@@ -64,45 +26,7 @@ local cloneref = function(instance)
 end
 local Players = cloneref(game:GetService("Players"))
 print(Players)
-print(Players.LocalPlayer.Name) -- work even call a method/function or use method
---Players.LocalPlayer:Kick() -- work
---Players.LocalPlayer.Backpack:Destroy() -- Work on Child too and call a method/function to remove it as work like normal
--- I hope you guys like this function that I make for 8 minutes
-]]
--- free tutorial of Lua:
---[[
-Example: Using the `do` keyword to create a block scope
-
-The `do` keyword starts a new block of code.  
-Any variables declared inside this block using `local`  
-will only exist inside that block.
-
-Example:
-do -- Start a new scope block
-	local variable = "string" -- This variable only exists inside here
-	print(variable) -- Output: "string"
-end -- End of block
-
-print(variable) -- Output: nil (variable is not accessible outside the block)
-]]
---[[
-My Tip for chaining variables and conditions in Lua:
-
-Lua checks values **from left to right**, stopping at the first `false` or `nil`.
-This is useful for checking multiple conditions in one line:
-
-Example:
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local Root = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-print(Root) -- Output: HumanoidRootPart
-
-Explanation:
-1. Lua checks if `LocalPlayer.Character` exists.
-2. If it's not nil, it continues to `FindFirstChild("HumanoidRootPart")`.
-3. If both exist, it sets `Root` to the part.
-If any part of the chain is nil, the result will be nil (no error).
-]]
+print(Players.LocalPlayer.Name) 
 --game:SetIsLoaded(true) > boolean true/false
 --game:Load() -- maybe make the game Load
 if not game:IsLoaded() then
@@ -115,7 +39,7 @@ if game.PlaceId ~= 142823291 then return end -- only one game support ahh script
 local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Backlostunking/ScriptLua/refs/heads/main/Orion-GB-V2.Lua"))()
 local executor = identifyexecutor and identifyexecutor() or getexecutorname and getexecutorname() or "Unknow"
 local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
-local Window = OrionLib:MakeWindow({IntroText = "Script Made By ScripterMrbacon",IntroIcon = "rbxassetid://7733955511",Name = ("SourceHub • "..GameName.." ✓ Executor "..executor),IntroToggleIcon = "rbxassetid://4335489011",HidePremium = false,SaveConfig = false,IntroEnabled = true,ConfigFolder = "Mm2SHub"})
+local Window = OrionLib:MakeWindow({IntroText = "Script Not Hub Still in Testing",IntroIcon = "rbxassetid://7733955511",Name = ("NotHub • "..GameName.." ✓ Executor "..executor),IntroToggleIcon = "rbxassetid://4335489011",HidePremium = false,SaveConfig = false,IntroEnabled = true,ConfigFolder = "Mm2SHub"})
 local MainTab = Window:MakeTab({Name = "Main", Icon = "rbxassetid://4483345998", PremiumOnly = false})
 local PlayerTab = Window:MakeTab({Name = "Local", Icon = "rbxassetid://4335489011", PremiumOnly = false})
 local env = getgenv and getgenv() or getrenv and getrenv() or getfenv and getfenv(0) or _G
