@@ -388,8 +388,8 @@ end)
 local MacLib = loadstring(game:HttpGet("https://github.com/biggaboy212/Maclib/releases/latest/download/maclib.txt"))()
 
 local Window = MacLib:Window({
-    Title = "nil.lua | MM2",
-    Subtitle = "#1 MM2 Script",
+    Title = "Not Hub | MM2",
+    Subtitle = "Testing",
     Size = UDim2.fromOffset(750, 550),
     DragStyle = 1,
     DisabledWindowControls = {},
