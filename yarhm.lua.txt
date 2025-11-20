@@ -2725,315 +2725,7 @@ local function SBOBP_fake_script() -- Fake Script: StarterGui.YARHM.AddCustomMod
 		}):Play()
 	end)
 end
-local function VIZJP_fake_script() -- Fake Script: StarterGui.YARHM.Flee the Facility
-    local script = Instance.new("LocalScript")
-    script.Name = "Flee the Facility"
-    script.Parent = Converted["_YARHM"]
-    local req = require
-    local require = function(obj)
-        local fake = fake_module_scripts[obj]
-        if fake then
-            return fake()
-        end
-        return req(obj)
-    end
-	local module = {}
-	module["gameId"] = 893973440 -- Restrict module to a certain game ID only. 0 allows all games.
-	if (module["gameId"] ~= game.GameId) and module["gameId"] ~= 0 then
-		script.Enabled = false
-	end
-	
-	module["Name"] = "Flee the Facility"
-	
-	local ts = game:GetService("TweenService")
-	
-	local FUNCTIONS = require(script.Parent.FUNCTIONS)
-	
-	
-	module.players = false
-	module.pcs = false
-	module.pods = false
-	module.exits = false
-	
-	module.antipcerror = false
-	module.flashlight = false
-	
-	local esps = {}
-	
-	local function getBeast()
-		local listplayers = game.Players:GetChildren()
-		for _, player in ipairs(listplayers) do
-			local character = player.Character
-			if character ~= nil and character:FindFirstChild("BeastPowers") then
-				return player
-			end
-		end
-	end
-	
-	local function reloadESP()
-	
-	
-		for _, i in ipairs(workspace:GetChildren()) do
-			if i.Name == "PlayerHighlight" and not module.players then
-				i:Destroy()
-			end
-	
-			if i.Name == "PCHighlight" and not module.pcs then
-				i:Destroy()
-			end
-	
-			if i.Name == "PodsHighlight" and not module.pods then
-				i:Destroy()
-			end
-	
-			if i.Name == "ExitsHighlight" and not module.exits then
-				i:Destroy()
-			end
-		end
-	
-		if module.players then
-	
-	
-	
-			local listplayers = game.Players:GetChildren()
-			for _, player in ipairs(listplayers) do
-				if player ~= game.Players.LocalPlayer and player.Character ~= nil then
-					local character = player.Character
-					if not character:FindFirstChild("PlayerHighlight") then
-						local a = Instance.new("Highlight", workspace)
-						esps["PlayerHighlight"] = a
-						a.Name = "PlayerHighlight"
-						a.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-						a.Adornee = character
-						task.spawn(function()
-							repeat
-								task.wait(0.1)
-								if player == getBeast() then
-									a.FillColor = Color3.fromRGB(255,0,0)
-								else
-									a.FillColor = Color3.fromRGB(0,255,0)
-								end
-							until character == nil or a == nil
-						end)
-					end
-				end
-			end
-	
-	
-		end
-	
-		if module.pcs then
-	
-	
-	
-	
-			for _, obj in ipairs(game.Workspace:GetDescendants()) do
-				if obj.Name == "ComputerTable" and not obj:FindFirstChild("PCHighlight") then
-					local hili = Instance.new("Highlight", workspace)
-					esps["PCHighlight"] = hili
-					hili.Name = "PCHighlight"
-					hili.OutlineTransparency = 1
-					hili.Adornee = obj
-					hili.FillColor = obj:FindFirstChild("Screen").Color
-				end
-			end
-	
-	
-		end
-	
-		if module.pods then
-	
-	
-	
-			for _, obj in ipairs(game.Workspace:GetDescendants()) do
-				if obj.Name == "FreezePod" then
-					local hili = Instance.new("Highlight", workspace)
-					esps["PodsHighlight"] = hili
-					hili.Name = "PodsHighlight"
-					hili.OutlineTransparency = 1
-					hili.Adornee = obj
-					hili.FillColor = Color3.fromRGB(0, 200, 255)
-				end
-			end
-	
-		end
-	
-	
-		if module.exits then
-	
-	
-	
-			for _, obj in ipairs(game.Workspace:GetDescendants()) do
-				if obj.Name == "ExitDoor" and not obj:FindFirstChild("ExitsHighlight") then
-					local hili = Instance.new("Highlight", workspace)
-					esps["ExitsHighlight"] = hili
-					hili.Name = "ExitsHighlight"
-					hili.OutlineTransparency = 1
-					hili.Adornee = obj
-					hili.FillColor = Color3.fromRGB(255,255,0)
-				end
-			end
-	
-		end
-	end
-	
-	
-	
-	
-	module[1] = {
-		Type = "Text",
-		Args = {"ESPs"}
-	}
-	
-	module[2] = {
-		Type = "ButtonGrid",
-		Toggleable = true, -- Recolors buttons for you onclick, you still need to save the state yourself
-		Args = {3, { -- 3 is the number of columns
-			Players = function(Self)
-	
-				if module.players then
-					module.players = false
-					reloadESP()
-				else
-					module.players = true
-					reloadESP()
-				end
-	
-	
-			end,
-			PCs = function(Self)
-	
-				if module.pcs then
-					module.pcs = false
-					reloadESP()
-				else
-					module.pcs = true
-					reloadESP()
-				end
-	
-			end,
-			Pods = function(Self)
-	
-				if module.pods then
-					module.pods = false
-					reloadESP()
-				else
-					module.pods = true
-					reloadESP()
-				end
-	
-	
-			end,
-			Exits = function(Self)
-	
-				if module.exits then
-					module.exits = false
-					reloadESP()
-				else
-					module.exits = true
-					reloadESP()
-				end
-	
-			end,
-		}
-		} 
-	}
-	module[3] = { -- spacing, button grid doesnt correctly height itself for some reason
-		Type = "Text",
-		Args = {""}
-	}
-	
-	module[4] = {
-		Type = "Text",
-		Args = {"Tools"}
-	}
-	
-	
-	local root = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-	
-	light = Instance.new("PointLight", root)
-	light.Brightness = 0
-	light.Range = 9999999999
-	
-	local wslock = false
-	local ws = 18
-	
-	local antifail = false
-	
-	
-	task.spawn(function() 
-		if game:GetService("RunService"):IsStudio() then return end -- :)
-	
-		local OldNameCall = nil
-	
-		OldNameCall = hookmetamethod(game, "__namecall", function(Self, ...)
-			local Args = {...}
-			local NamecallMethod = getnamecallmethod()
-	
-			if NamecallMethod == "FireServer" and Args[1] == "SetPlayerMinigameResult" and antifail then
-				print("Minigame result - Intercepting result to true")
-				Args[2] = true
-			end
-	
-			return OldNameCall(Self, unpack(Args))
-		end)
-	
-	end)
-	
-	
-	module[5] = {
-		Type = "ButtonGrid",
-		Toggleable = true,
-		Args = {3, {
-			Anti_PC_Error = function()
-				if antifail then antifail = false else antifail = true end
-			end,
-			Flashlight = function()
-				if light.Brightness == 0 then
-					light.Brightness = 2.5
-				else
-					light.Brightness = 0
-				end
-			end,
-		}}
-	}
-	
-	task.spawn(function()
-		while task.wait(0.1) do
-			if wslock then
-				root.Parent:WaitForChild("Humanoid").WalkSpeed = ws
-			end
-		end
-	end)
-	
-	module[6] = {
-		Type = "Input",
-		Args = {"Input a walkspeed", "Set & Lock", function(Self, text)
-			if not tonumber(text) then
-				FUNCTIONS.notification("Input isn't a valid number.")
-				return
-			end
-	
-			ws = tonumber(text)
-			wslock = true
-		end,}
-	}
-	
-	module[7] = {
-		Type = "Button",
-		Args = {"Unlock all", function()
-			wslock = false
-		end,}
-	}	
-	
-	module[8] = {
-		Type = "Text",
-		Args = {"Locking means your speed will stay the same no matter what. This means you will not be slow when crawling or jumping as beast."}
-	}
-	
-	repeat task.wait() until getgenv().Modules
-	getgenv().Modules[2] = module
-end
+
 local function UTRFSE_fake_script() -- Fake Script: StarterGui.YARHM.Universal
     local script = Instance.new("LocalScript")
     script.Name = "Universal"
@@ -6237,6 +5929,197 @@ local function QUXUEEW_fake_script() -- Fake Script: StarterGui.YARHM.Murder Mys
 				localplayer.Character.Knife.Stab:FireServer(unpack(args))
 				return
 			else
+				local lpknife = localplayer.Character:FindFirstChild("Knife")
+				if not lpknife then return end
+
+				local raycastParams = RaycastParams.new()
+				raycastParams.FilterType = Enum.RaycastFilterType.Exclude
+				raycastParams.FilterDescendantsInstances = {localplayer.Character}
+				local rayResult = workspace:Raycast(lpknife:GetPivot().Position, (nearestHRP.Position - localplayer.Character:FindFirstChild("HumanoidRootPart").Position).Unit * 350, raycastParams)
+				local toThrow = nearestHRP.Position
+				--if rayResult then
+				--	toThrow = rayResult.Position
+				--end
+				--if math.random(0, 10) == 5 then -- idk what the fuk im doing
+				--	toThrow = nearestHRP.Position
+				--end
+				local args = {
+					[1] = lpknife:GetPivot(), 
+					[2] = toThrow
+				}
+
+				localplayer.Character.Knife.Throw:FireServer(unpack(args))
+				return
+			end
+
+
+		end,}
+	})
+
+	table.insert(module, {
+		Type = "Toggle",
+		Args = {"Simulate knife throw for killing nearest", function(Self, state)
+			simulateKnifeThrow = state
+			if state then
+				fu.notification("Simulating a knife throw can make you look legitimate. However, note that it's less reliable and may miss the target.")
+			end
+		end,}
+	})
+
+	local killAuraCon = nil
+
+	table.insert(module, {
+		Type = "Toggle",
+		Args = {"Murderer kill aura", function(Self, state)
+			if state then
+				if killAuraCon then killAuraCon:Disconnect() end
+			else
+				killAuraCon = game:GetService("RunService").Heartbeat:Connect(function()
+					for _, player in ipairs(game.Players:GetPlayers()) do
+						if player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player ~= localplayer then
+							local hrp = player.Character:FindFirstChild("HumanoidRootPart")
+							if (hrp.Position - localplayer.Character:FindFirstChild("HumanoidRootPart").Position).Magnitude < 7 then
+								hrp.Anchored = true
+								hrp.CFrame = localplayer.Character:FindFirstChild("HumanoidRootPart").CFrame + localplayer.Character:FindFirstChild("HumanoidRootPart").CFrame.LookVector * 2
+
+								task.wait(0.1)
+								local args = {
+									[1] = "Slash"
+								}
+
+								localplayer.Character.Knife.Stab:FireServer(unpack(args))
+								return	
+							end
+						end
+					end
+				end)
+			end
+		end,}
+	})
+
+	table.insert(module, {
+		Type = "Button",
+		Args = {"Kill EVERYONE as murderer", function()
+			if findMurderer() ~= localplayer then fu.notification("You're not murderer.") return end
+
+			if not localplayer.Character:FindFirstChild("Knife") then
+				local hum = localplayer.Character:FindFirstChild("Humanoid")
+				if localplayer.Backpack:FindFirstChild("Knife") then
+					localplayer.Character:FindFirstChild("Humanoid"):EquipTool(localplayer.Backpack:FindFirstChild("Knife"))
+				else
+					fu.notification("You don't have the knife..?")
+					return
+				end
+			end
+
+			for _, player in ipairs(game.Players:GetPlayers()) do
+				if player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player ~= localplayer then
+					player.Character:FindFirstChild("HumanoidRootPart").Anchored = true
+					player.Character:FindFirstChild("HumanoidRootPart").CFrame = localplayer.Character:FindFirstChild("HumanoidRootPart").CFrame + localplayer.Character:FindFirstChild("HumanoidRootPart").CFrame.LookVector * 1 
+
+				end	
+			end
+
+			local args = {
+				[1] = "Slash"
+			}
+			localplayer.Character.Knife.Stab:FireServer(unpack(args))
+		end,}
+	})
+
+	table.insert(module, {
+		Type = "Text",
+		Args = {"Fun"}
+	})
+
+	table.insert(module, {
+		Type = "Button",
+		Args = {"Hold everyone hostage", function()
+			if findMurderer() ~= localplayer then fu.notification("You're not murderer. This'll only be useful if you're the murderer.") return end
+
+			for _, player in ipairs(game.Players:GetPlayers()) do
+				if player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player ~= localplayer then
+					player.Character:FindFirstChild("HumanoidRootPart").Anchored = true
+					player.Character:FindFirstChild("HumanoidRootPart").CFrame = localplayer.Character:FindFirstChild("HumanoidRootPart").CFrame + localplayer.Character:FindFirstChild("HumanoidRootPart").CFrame.LookVector * 5
+				end	
+			end
+
+			fu.notification("Placed every single player in a single point. Kill everyone at once once you decide to.")
+		end,}
+	})
+
+	repeat task.wait() until getgenv().Modules
+	getgenv().Modules[3] = module
+	fu.refreshlist()
+end
+local function PIXKC_fake_script() -- Fake Script: StarterGui.YARHM.FloatingButtonSetting.ControlBarContainer.ControlBar.Visibility.LocalScript
+	local script = Instance.new("LocalScript")
+	script.Name = "LocalScript"
+	script.Parent = Converted["_Visibility"]
+	local req = require
+	local require = function(obj)
+		local fake = fake_module_scripts[obj]
+		if fake then
+			return fake()
+		end
+		return req(obj)
+	end
+	script.Parent.MouseButton1Click:Connect(function()
+		getgenv().YARHMFUNCTIONS.ftToggleVisibility()
+	end)
+end
+local function JIUI_fake_script() -- Fake Script: StarterGui.YARHM.FloatingButtonSetting.ControlBarContainer.ControlBar.Lock.LocalScript
+	local script = Instance.new("LocalScript")
+	script.Name = "LocalScript"
+	script.Parent = Converted["_Lock1"]
+	local req = require
+	local require = function(obj)
+		local fake = fake_module_scripts[obj]
+		if fake then
+			return fake()
+		end
+		return req(obj)
+	end
+	script.Parent.MouseButton1Click:Connect(function()
+		getgenv().YARHMFUNCTIONS.ftToggleLock()
+	end)
+end
+local function ZISNWBG_fake_script() -- Fake Script: StarterGui.YARHM.FloatingButtonSetting.ControlBarContainer.ControlBar.Exit.LocalScript
+	local script = Instance.new("LocalScript")
+	script.Name = "LocalScript"
+	script.Parent = Converted["_Exit"]
+	local req = require
+	local require = function(obj)
+		local fake = fake_module_scripts[obj]
+		if fake then
+			return fake()
+		end
+		return req(obj)
+	end
+	script.Parent.MouseButton1Click:Connect(function()
+		getgenv().YARHMFUNCTIONS.closeFinetuneFB()
+	end)
+end
+coroutine.wrap(ZTSOVAR_fake_script)()
+coroutine.wrap(FONQUUM_fake_script)()
+coroutine.wrap(DOAXIVT_fake_script)()
+coroutine.wrap(DVJENL_fake_script)()
+coroutine.wrap(SAJO_fake_script)()
+coroutine.wrap(NCDB_fake_script)()
+coroutine.wrap(SBOBP_fake_script)()
+coroutine.wrap(VIZJP_fake_script)()
+coroutine.wrap(UTRFSE_fake_script)()
+coroutine.wrap(SFEGW_fake_script)()
+coroutine.wrap(MZHT_fake_script)()
+coroutine.wrap(PKEHOF_fake_script)()
+coroutine.wrap(OEALVLK_fake_script)()
+coroutine.wrap(NFLXNSA_fake_script)()
+coroutine.wrap(DFEDO_fake_script)()
+coroutine.wrap(QUXUEEW_fake_script)()
+coroutine.wrap(PIXKC_fake_script)()
+coroutine.wrap(JIUI_fake_script)()
+coroutine.wrap(ZISNWBG_fake_script)()
+		else
 				local lpknife = localplayer.Character:FindFirstChild("Knife")
 				if not lpknife then return end
 
